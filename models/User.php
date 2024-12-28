@@ -72,7 +72,27 @@ public function updateUserById($user_id, $username, $email, $role) {
 }
 
 // Update user details
+public function updateUser() {
+    $query = "UPDATE " . $this->table_name . "
+        SET
+            username = :username,
+            email = :email,
+            role = :role
+        WHERE user_id = :id";
 
+    $stmt = $this->conn->prepare($query);
+
+    $this->username = htmlspecialchars(strip_tags($this->username));
+    $this->email = htmlspecialchars(strip_tags($this->email));
+    $this->role = htmlspecialchars(strip_tags($this->role));
+
+    $stmt->bindParam(":username", $this->username);
+    $stmt->bindParam(":email", $this->email);
+    $stmt->bindParam(":role", $this->role);
+    $stmt->bindParam(":id", $this->id, PDO::PARAM_INT);
+
+    return $stmt->execute();
+}
    
 
    
