@@ -132,7 +132,37 @@ class AdminController {
     }
 
     
-   
+    public function updateUser() {
+        $user_id = $_GET['id'] ?? '';
+
+        if (empty($user_id)) {
+            $this->dashboard('User ID is required.');
+            return;
+        }
+
+        $user = $this->user->getUserById($user_id);
+
+        if (!$user) {
+            $this->dashboard('User not found.');
+            return;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $username = $_POST['username'] ?? '';
+            $email = $_POST['email'] ?? '';
+            $role = $_POST['role'] ?? 'user';
+
+            if ($this->user->updateUserById($user_id, $username, $email, $role)) {
+                header("Location: index.php?action=admin_dashboard&user_updated=1");
+                exit();
+            } else {
+                $this->showUpdateUserForm($user, 'Failed to update user.');
+            }
+        } else {
+            $this->showUpdateUserForm($user);
+        }
+    }
+
     public function deleteUser() {
         $user_id = $_GET['id'] ?? '';
 
