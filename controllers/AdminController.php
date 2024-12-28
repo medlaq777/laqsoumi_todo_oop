@@ -59,7 +59,48 @@ class AdminController {
 
    
 
-    
+    public function updateTask() {
+        $task_id = $_GET['id'] ?? '';
+
+        if (empty($task_id)) {
+            $this->dashboard('Task ID is required.');
+            return;
+        }
+
+        $task = $this->task->getTaskById($task_id);
+
+        if (!$task) {
+            $this->dashboard('Task not found.');
+            return;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $title = $_POST['title'] ?? '';
+            $description = $_POST['description'] ?? '';
+            $status = $_POST['status'] ?? '';
+
+            $validStatuses = ['todo', 'doing', 'done'];
+
+            if (empty($title) || empty($description) || empty($status)) {
+                $this->showUpdateTaskForm($task, 'All fields are required.');
+                return;
+            }
+
+            if (!in_array($status, $validStatuses)) {
+                $this->showUpdateTaskForm($task, 'Invalid status value. Allowed values: todo, doing, done.');
+                return;
+            }
+
+            if ($this->task->updateTaskById($task_id, $title, $description, $status)) {
+                header("Location: index.php?action=admin_dashboard&task_updated=1");
+                exit();
+            } else {
+                $this->showUpdateTaskForm($task, 'Failed to update task.');
+            }
+        } else {
+            $this->showUpdateTaskForm($task);
+        }
+    }
 
    
     
