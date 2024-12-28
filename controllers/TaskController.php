@@ -33,6 +33,17 @@ class TaskController {
     
    
   
+    public function addTask($title, $description, $status) {
+        if (empty($title) || empty($description) || empty($status)) {
+            $this->errorResponse("All fields are required.");
+        }
+
+        if ($this->task->createTask($title, $description, $status)) {
+            $this->redirect("index.php", ["success" => 1]);
+        } else {
+            $this->errorResponse("Failed to add task.");
+        }
+    }
 
    
 
