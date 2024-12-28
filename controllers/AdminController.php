@@ -133,6 +133,20 @@ class AdminController {
 
     
    
-    
+    public function deleteUser() {
+        $user_id = $_GET['id'] ?? '';
+
+        if (empty($user_id)) {
+            $this->dashboard('User ID is required.');
+            return;
+        }
+
+        if ($this->user->deleteTUserById($user_id)) {
+            header("Location: index.php?action=admin_dashboard&user_deleted=1");
+            exit();
+        } else {
+            $this->dashboard('Failed to delete user.');
+        }
+    }
 }
 ?>
