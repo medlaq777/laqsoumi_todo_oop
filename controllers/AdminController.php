@@ -102,7 +102,35 @@ class AdminController {
         }
     }
 
-   
+    public function createUser() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $username = $_POST['username'] ?? '';
+            $email = $_POST['email'] ?? '';
+            $password = $_POST['password'] ?? '';
+            $role = $_POST['role'] ?? 'user';
+
+            $this->user->username = $username;
+            $this->user->email = $email;
+            $this->user->password = $password;
+            $this->user->role = $role;
+
+            $errors = $this->user->validate();
+            if (!empty($errors)) {
+                include 'views/create_user.php';
+                return;
+            }
+
+            if ($this->user->create()) {
+                header("Location: index.php?action=admin_dashboard&user_created=1");
+                exit();
+            } else {
+                include 'views/create_user.php';
+            }
+        } else {
+            include 'views/create_user.php';
+        }
+    }
+
     
    
     
