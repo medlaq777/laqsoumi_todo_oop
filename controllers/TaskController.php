@@ -19,7 +19,15 @@ class TaskController {
         $this->taskModel = new Task($this->db);
         $this->tagModel = new Tag($this->db);
     }
-   
+    public function index() {
+        $tasks_by_status = [
+            'todo' => $this->taskModel->getTasksByStatus('todo'),
+            'doing' => $this->taskModel->getTasksByStatus('doing'),
+            'done' => $this->taskModel->getTasksByStatus('done')
+        ];
+        
+        require 'views/user_dashboard.php';
+    }
     
    
     
