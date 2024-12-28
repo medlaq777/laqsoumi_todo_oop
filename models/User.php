@@ -30,7 +30,7 @@ class User {
         $this->username = htmlspecialchars(strip_tags($this->username));
         $this->email = htmlspecialchars(strip_tags($this->email));
         $this->password = password_hash($this->password, PASSWORD_DEFAULT);
-        $this->role = $this->role ?? 'user'; // Default role is 'user'
+        $this->role = $this->role ?? 'user'; 
 
         $stmt->bindParam(":username", $this->username);
         $stmt->bindParam(":email", $this->email);
@@ -42,6 +42,15 @@ class User {
         }
         return false;
     }
+ 
+ public function deleteUser() {
+    $query = "DELETE FROM " . $this->table_name . " WHERE user_id = :id";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(":id", $this->id, PDO::PARAM_INT);
+    return $stmt->execute();
+}
+
+
 
    
 
