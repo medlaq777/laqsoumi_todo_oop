@@ -56,6 +56,20 @@ public function deleteTUserById($user_id) {
     return $stmt->execute();
 }
 
+public function updateUserById($user_id, $username, $email, $role) {
+    $query = "UPDATE users SET username= :username, email = :email, role = :role WHERE user_id = :user_id";
+
+    $stmt = $this->conn->prepare($query);
+
+    
+    $stmt->bindParam(':username', $username);
+    $stmt->bindParam(':email', $email);
+    $stmt->bindParam(':role', $role);
+    $stmt->bindParam(':user_id', $user_id);
+
+    
+    return $stmt->execute();
+}
 
 // Update user details
 
