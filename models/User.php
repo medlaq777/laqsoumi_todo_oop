@@ -137,17 +137,21 @@ public function updateUser() {
         return $errors;
     }
     public  function getUserById($user_id) {
-         
+    
         $query = "SELECT * FROM users WHERE user_id = :user_id";
         $stmt=$this->conn->prepare($query);
         $stmt->bindParam(':user_id', $user_id,);
         $stmt->execute();
         
-        // Fetch the user data
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
   
 
-    
+    public function getAllUsers() {
+        $query = "SELECT user_id, username,email,password,role FROM " . $this->table_name;
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 
