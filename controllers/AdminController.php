@@ -41,7 +41,21 @@ class AdminController {
         }
     }
 
-   
+    public function deleteTask() {
+        $task_id = $_GET['id'] ?? '';
+
+        if (empty($task_id)) {
+            $this->dashboard('Task ID is required.');
+            return;
+        }
+
+        if ($this->task->deleteTaskById($task_id)) {
+            header("Location: index.php?action=admin_dashboard&task_deleted=1");
+            exit();
+        } else {
+            $this->dashboard('Failed to delete task.');
+        }
+    }
 
    
 
