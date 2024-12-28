@@ -31,7 +31,11 @@ class TaskController {
     
    
     
-   
+    public function listTasks() {
+        $tasks = $this->task->getAllTaskstag();
+        include 'views/taskListView.php';
+    }
+
   
     public function addTask($title, $description, $status) {
         if (empty($title) || empty($description) || empty($status)) {
