@@ -82,7 +82,27 @@ class TaskController {
     
 
  
+public function listUserTasks($user_id) {
+    if (empty($user_id)) {
+        $this->errorResponse("User ID is required.");
+    }
 
+    $tasks = $this->task->getTasksByUserId($user_id);
+
+  
+    $tasks_by_status = [
+        'todo' => [],
+        'doing' => [],
+        'done' => []
+    ];
+
+    foreach ($tasks as $task) {
+        $tasks_by_status[$task['status']][] = $task;
+    }
+
+    
+    include 'views/user_dashboard.php';
+}
 public function createUserTask() {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $title = $_POST['title'] ?? '';
