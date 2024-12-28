@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100">
@@ -11,6 +12,11 @@
 <div class="flex h-screen">
     <div class="bg-gray-800 text-white w-64 p-6 space-y-6">
         <h2 class="text-3xl font-semibold text-center">Admin Panel</h2>
+        <div class="space-y-4">
+            <a href="javascript:void(0)" id="showUsersBtn" class="block text-gray-200 hover:bg-gray-700 py-2 px-4 rounded">Users</a>
+            <a href="javascript:void(0)" id="showTasksBtn" class="block text-gray-200 hover:bg-gray-700 py-2 px-4 rounded">Tasks</a>
+            <a href="index.php?action=create_task" class="block text-gray-200 hover:bg-gray-700 py-2 px-4 rounded">Create Task</a>
+        </div>
     </div>
 
     
@@ -61,6 +67,21 @@
     </div>
 </div>
 
+<script>
+    const showUsersBtn = document.getElementById('showUsersBtn');
+    const showTasksBtn = document.getElementById('showTasksBtn');
+    const usersSection = document.getElementById('usersSection');
+    const tasksSection = document.getElementById('tasksSection');
+    showUsersBtn.addEventListener('click', function() {
+        usersSection.classList.remove('hidden');
+        tasksSection.classList.add('hidden');
+    });
+
+    showTasksBtn.addEventListener('click', function() {
+        tasksSection.classList.remove('hidden');
+        usersSection.classList.add('hidden');
+    });
+</script>
 
 </body>
 </html>
