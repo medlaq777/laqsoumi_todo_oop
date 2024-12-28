@@ -83,7 +83,30 @@ class TaskController {
 
  
 
+public function createUserTask() {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $title = $_POST['title'] ?? '';
+        $description = $_POST['description'] ?? '';
+        $status = $_POST['status'] ?? 'todo';
+        $userId = $_SESSION['user_id'] ?? null;
 
+        if (empty($title) || empty($description) || empty($userId)) {
+            $_SESSION['error'] = "All fields are required.";
+            header("Location: index.php?action=user_dashboard");
+            exit();
+        }
+
+        if ($this->taskModel->createUserTask($title, $description, $status, $userId)) {
+            $_SESSION['success'] = "Task created successfully.";
+        } else {
+            $_SESSION['error'] = "Failed to create task.";
+        }
+        header("Location: index.php?action=user_dashboard");
+        exit();
+    }
+    
+    include 'views/create_user_task.php';
+}
 
 
 }
