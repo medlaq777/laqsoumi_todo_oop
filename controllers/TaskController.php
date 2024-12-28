@@ -48,7 +48,35 @@ class TaskController {
    
 
     
-   
+    public function updateTaskStatus() {
+        if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+            $this->redirect("index.php?action=user_dashboard");
+            return;
+        }
+    
+        $task_id = $_POST['task_id'] ?? '';
+        $status = $_POST['status'] ?? '';
+        $user_id = $_SESSION['user_id'] ?? '';
+        $csrf_token = $_POST['csrf_token'] ?? '';
+    
+        // Check CSRF token
+        if (!isset($_SESSION['csrf_token']) || $csrf_token !== $_SESSION['csrf_token']) {
+            $this->errorResponse("Invalid CSRF token.");
+        }
+    
+        // Validate input
+        if (empty($task_id) || empty($status) || empty($user_id)) {
+            $this->errorResponse("Invalid input.");
+        }
+    
+        // Update task status
+        if ($this->task->updateTaskStatus($task_id, $status, $user_id)) {
+            $this->redirect("index.php?action=user_dashboard", ["task_updated" => 1]);
+        } else {
+            $error = "Unable to update task status.";
+            include 'views/user_dashboard.php';
+        }
+    }
 
   
     
