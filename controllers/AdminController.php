@@ -131,7 +131,10 @@ class AdminController {
         }
     }
 
-    
+    private function showUpdateUserForm($user, $message = '') {
+        include 'views/update_user.php';
+    }
+
     public function updateUser() {
         $user_id = $_GET['id'] ?? '';
 
