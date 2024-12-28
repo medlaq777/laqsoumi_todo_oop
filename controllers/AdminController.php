@@ -17,7 +17,12 @@ class AdminController {
         include 'views/admin_dashboard.php';
     }
 
-   
+    private function showAssignTaskForm($error = null, $success = null) {
+        $tasks = $this->task->getAllTasks();
+        $users = $this->user->getAllUsers();
+        include 'views/assign_task.php';
+    }
+
     
 
     public function createTask() {
@@ -57,7 +62,9 @@ class AdminController {
         }
     }
 
-   
+    private function showUpdateTaskForm($task, $message = '') {
+        include 'views/update_task.php';
+    }
 
     public function updateTask() {
         $task_id = $_GET['id'] ?? '';
