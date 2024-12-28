@@ -32,6 +32,37 @@ class AuthController {
         }
     }
 
+    public function login() {
+        if($_SERVER["REQUEST_METHOD"] == "POST") {
+            $this->user->email = $_POST['email'] ?? '';
+            $password = $_POST['password'] ?? '';
+
+            if($this->user->emailExists()) {
+                if(password_verify($password, $this->user->password)) {
+                    session_start();
+                    $_SESSION['user_id'] = $this->user->id;
+                    $_SESSION['username'] = $this->user->username;
+                    $_SESSION['role'] = $this->user->role;
+                
+                    if($this->user->role === 'admin') {
+                        header("Location: index.php?action=admin_dashboard");
+                    } else {
+                        header("Location: index.php?action=user_dashboard");
+                    }
+                    exit();
+                } else {
+                    $error = "Invalid password.";
+                }
+            } else {
+                $error = "Email not found.";
+            }
+            
+            include 'views/login.php';
+        } else {
+            include 'views/login.php';
+        }
+    }
+
     
 }
 
