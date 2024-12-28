@@ -17,7 +17,32 @@ class User {
         $this->conn = $db;
     }
 
-    
+    public function create() {
+        $query = "INSERT INTO " . $this->table_name . "
+            SET
+                username = :username,
+                email = :email,
+                password = :password,
+                role = :role";
+
+        $stmt = $this->conn->prepare($query);
+
+        $this->username = htmlspecialchars(strip_tags($this->username));
+        $this->email = htmlspecialchars(strip_tags($this->email));
+        $this->password = password_hash($this->password, PASSWORD_DEFAULT);
+        $this->role = $this->role ?? 'user'; // Default role is 'user'
+
+        $stmt->bindParam(":username", $this->username);
+        $stmt->bindParam(":email", $this->email);
+        $stmt->bindParam(":password", $this->password);
+        $stmt->bindParam(":role", $this->role);
+
+        if($stmt->execute()) {
+            return true;
+        }
+        return false;
+    }
+
    
 
    
