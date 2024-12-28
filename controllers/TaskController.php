@@ -79,7 +79,11 @@ class TaskController {
     }
 
   
-    
+    private function redirect($url, $params = []) {
+        $query = http_build_query($params);
+        header("Location: {$url}?" . $query);
+        exit();
+    }
 
  
     private function errorResponse($message) {
