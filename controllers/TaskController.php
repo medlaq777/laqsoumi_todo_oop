@@ -29,7 +29,19 @@ class TaskController {
         require 'views/user_dashboard.php';
     }
     
-   
+    public function details($taskId) {
+        $task = $this->taskModel->getTaskDetails($taskId);
+        $tags = $this->tagModel->getTaskTags($taskId);
+        
+        if (!$task) {
+            $_SESSION['error'] = "Task not found.";
+            header("Location: index.php?action=user_dashboard");
+            exit();
+        }
+        
+        include 'views/task_details.php';
+    }
+
     
     public function listTasks() {
         $tasks = $this->task->getAllTaskstag();
