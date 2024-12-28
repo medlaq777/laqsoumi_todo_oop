@@ -136,7 +136,16 @@ public function updateUser() {
         
         return $errors;
     }
-  
+    public  function getUserById($user_id) {
+         
+        $query = "SELECT * FROM users WHERE user_id = :user_id";
+        $stmt=$this->conn->prepare($query);
+        $stmt->bindParam(':user_id', $user_id,);
+        $stmt->execute();
+        
+        // Fetch the user data
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
   
 
     
