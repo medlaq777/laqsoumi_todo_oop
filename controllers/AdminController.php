@@ -23,7 +23,25 @@ class AdminController {
         include 'views/assign_task.php';
     }
 
-    
+    public function assignTask() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $task_id = $_POST['task_id'] ?? '';
+            $user_id = $_POST['user_id'] ?? '';
+
+            if (empty($task_id) || empty($user_id)) {
+                $this->showAssignTaskForm('Please select both a task and a user.');
+                return;
+            }
+
+            if ($this->task->assignTaskToUser($task_id, $user_id)) {
+                $this->showAssignTaskForm(null, 'Task assigned successfully!');
+            } else {
+                $this->showAssignTaskForm('Failed to assign task. Please try again.');
+            }
+        } else {
+            $this->showAssignTaskForm();
+        }
+    }
 
     public function createTask() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
