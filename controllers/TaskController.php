@@ -82,6 +82,11 @@ class TaskController {
     
 
  
+    private function errorResponse($message) {
+        $_SESSION['error_message'] = $message; 
+        header('Location: index.php'); 
+        exit();
+    }
 public function listUserTasks($user_id) {
     if (empty($user_id)) {
         $this->errorResponse("User ID is required.");
