@@ -93,7 +93,27 @@ public function updateUser() {
 
     return $stmt->execute();
 }
-   
+    public function emailExists() {
+        $query = "SELECT user_id, username, password, role
+            FROM " . $this->table_name . "
+            WHERE email = ?
+            LIMIT 0,1";
+
+        $stmt = $this->conn->prepare($query);
+        $this->email = htmlspecialchars(strip_tags($this->email));
+        $stmt->bindParam(1, $this->email);
+        $stmt->execute();
+
+        if($stmt->rowCount() > 0) {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            $this->id = $row['user_id'];
+            $this->username = $row['username'];
+            $this->password = $row['password'];
+            $this->role = $row['role'];
+            return true;
+        }
+        return false;
+    }
 
    
   
