@@ -152,15 +152,29 @@ class Task {
     }
 
    
-    public function deleteTaskById($task_id) {
-        $query = "DELETE FROM tasks WHERE task_id = :task_id";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':task_id', $task_id,PDO::PARAM_INT);
-        return $stmt->execute();
-    }
+   
    
     
-   
+    public function getTasksByPriority($priority) {
+        $query = "SELECT t.*, GROUP_CONCAT(tg.NAME) as tags 
+                  FROM Tasks t 
+                  LEFT JOIN TagsTasks tt ON t.task_id = tt.tasks_id 
+                  LEFT JOIN Tags tg ON tt.tags_id = tg.id_tags 
+                  WHERE t.priority = :priority 
+                  GROUP BY t.task_id";
+        
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':priority', $priority);
+        
+        try {
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error fetching tasks by priority: " . $e->getMessage());
+            return [];
+        }
+    }
+
     public function updateTaskById($task_id, $title, $description, $status, $priority) {
         $query = "UPDATE tasks SET title = :title, description = :description, status = :status, priority = :priority WHERE task_id = :task_id";
 
@@ -173,7 +187,17 @@ class Task {
         return $stmt->execute();
     }
 
-       
+        public function getTaskById($task_id) {
+            
+            $query = "SELECT * FROM tasks WHERE task_id = :task_id LIMIT 1";
+            $stmt = $this->conn->prepare($query);
+                $stmt->bindParam(':task_id', $task_id);
+                $stmt->execute();
+    
+            $task = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            return $task ? $task : false;
+        }
         
     
 }
