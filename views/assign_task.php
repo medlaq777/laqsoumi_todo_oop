@@ -29,7 +29,9 @@
             <label for="user_id" class="block text-sm font-medium text-gray-700">Assign to User:</label>
             <select name="user_id" id="user_id" class="w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
                 <option value="">Select a user</option>
-            
+                <?php foreach ($users as $user): ?>
+                    <option value="<?= htmlspecialchars($user['user_id']); ?>"><?= htmlspecialchars($user['username']); ?></option>
+                <?php endforeach; ?>
             </select>
         </div>
 
