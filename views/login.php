@@ -11,6 +11,17 @@
         <div class="bg-white p-8 rounded-lg shadow-md w-96">
             <h1 class="text-2xl font-bold mb-6 text-center">Login</h1>
 
+            <?php if(isset($_GET['registered'])): ?>
+                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
+                    Registration successful! Please login.
+                </div>
+            <?php endif; ?>
+
+            <?php if(isset($error)): ?>
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+                    <?php echo htmlspecialchars($error); ?>
+                </div>
+            <?php endif; ?>
 
             <form action="index.php?action=login" method="POST">
                 <div class="mb-4">

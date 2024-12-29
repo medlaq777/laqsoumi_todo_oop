@@ -11,7 +11,15 @@
         <div class="bg-white p-8 rounded-lg shadow-md w-96">
             <h1 class="text-2xl font-bold mb-6 text-center">Register</h1>
 
-           
+            <?php if(!empty($errors)): ?>
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+                    <ul class="list-disc list-inside">
+                        <?php foreach($errors as $error): ?>
+                            <li><?php echo htmlspecialchars($error); ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            <?php endif; ?>
 
             <form action="index.php?action=register" method="POST">
                 <div class="mb-4">
