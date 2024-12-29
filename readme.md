@@ -1,15 +1,15 @@
-# Oumaima_aitsaid_Task
+# Med_Laqsoumi_todo_oop_Task
 
 **TaskFlow - Application web simple de gestion de tâches**
 
 **Author du Brief:** Iliass RAIHANI.
 
-**Author:** Oumaima Ait said.
 **Author:** Mohamed Laqsoumi.
+**Author:** Oumaima Ait said.
 
 ## Links
 
-- **GitHub Repository :** [View on GitHub](https://github.com/Youcode-Classe-E-2024-2025/aitsaid_laqsoumi_todo_oop.git)
+- **GitHub Repository :** [View on GitHub](https://github.com/Youcode-Classe-E-2024-2025/laqsoumi_todo_oop)
 - **UML Link :** 
 [View UML](https://lucid.app/lucidchart/4471e4ff-7c45-442b-92db-e1ae14d8dc82/edit?viewport_loc=-1187%2C-452%2C6191%2C3548%2C0_0&invitationId=inv_8541fe01-3653-43a9-aff8-693942e0f54b)
 
