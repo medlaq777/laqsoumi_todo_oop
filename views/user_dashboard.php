@@ -32,27 +32,54 @@
 
       
         <div class="grid grid-cols-3 gap-6">
-          
+            <?php
+            $columns = [
+                'todo' => ['title' => 'À FAIRE', 'color' => 'blue'],
+                'doing' => ['title' => 'EN COURS', 'color' => 'yellow'],
+                'done' => ['title' => 'TERMINÉ', 'color' => 'green']
+            ];
+
+            foreach ($columns as $status => $column):
+            ?>
             <div class="bg-white rounded-lg shadow-md p-6 border-t-4 border-<?php echo $column['color']; ?>-500">
                 <h2 class="text-xl font-semibold text-<?php echo $column['color']; ?>-500 mb-4">
                     <?php echo $column['title']; ?> | <?php echo count($tasks_by_status[$status]); ?>
                 </h2>
                 <div class="space-y-4">
-                   
+                    <?php foreach ($tasks_by_status[$status] as $task): ?>
                     <div class="border rounded-lg p-4">
                         <h3 class="font-bold mb-2"><?php echo htmlspecialchars($task['title']); ?></h3>
                   
                         <div class="flex flex-wrap gap-2 mb-2">
-                          
+                            <?php 
+                            if (isset($task['tags']) && $task['tags'] !== null) {
+                                $tags = explode(',', $task['tags']);
+                                foreach ($tags as $tag): 
+                                    $tagColor = match($tag) {
+                                        'bug' => 'bg-red-100 text-red-800',
+                                        'feature' => 'bg-blue-100 text-blue-800',
+                                        'basic' => 'bg-gray-100 text-gray-800',
+                                        default => 'bg-gray-100 text-gray-800'
+                                    };
+                            ?>
                             <span class="px-2 py-1 text-sm rounded <?php echo $tagColor; ?>">
                                 <?php echo htmlspecialchars($tag); ?>
                             </span>
-                           
+                            <?php 
+                                endforeach;
+                            }
+                            ?>
                         </div>
                         <div class="flex justify-between items-center mt-2">
                             <span class="text-sm text-gray-600">
                                 Échéance: 
-                              
+                                <?php
+                                if (isset($task['due_date']) && $task['due_date'] !== null) {
+                                    echo date('Y-m-d', strtotime($task['due_date']));
+                                } else {
+                                    echo 'Non définie';
+                                }
+                                ?>
                             </span>
                             <a href="index.php?action=task_details&id=<?php echo $task['task_id']; ?>" 
                                class="bg-gray-100 hover:bg-gray-200 text-gray-800 px-3 py-1 rounded text-sm">
@@ -60,10 +87,10 @@
                             </a>
                         </div>
                     </div>
-                  
+                    <?php endforeach; ?>
                 </div>
             </div>
-           
+            <?php endforeach; ?>
         </div>
     </div>
 </body>

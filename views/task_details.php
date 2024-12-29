@@ -1,4 +1,11 @@
-
+<?php
+if (!isset($task) || !is_array($task)) {
+    $task = [];
+}
+if (!isset($tags) || !is_array($tags)) {
+    $tags = [];
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,7 +32,17 @@
                 <div>
                     <h2 class="text-lg font-semibold mb-2">Tags</h2>
                     <div class="flex flex-wrap gap-2">
-                    
+                        <?php foreach ($tags as $tag): ?>
+                        <span class="px-3 py-1 rounded-full text-sm
+                            <?php echo match($tag['NAME'] ?? '') {
+                                'bug' => 'bg-red-100 text-red-800',
+                                'feature' => 'bg-blue-100 text-blue-800',
+                                'basic' => 'bg-gray-100 text-gray-800',
+                                default => 'bg-gray-100 text-gray-800'
+                            }; ?>">
+                            <?php echo htmlspecialchars($tag['NAME'] ?? 'Unknown'); ?>
+                        </span>
+                        <?php endforeach; ?>
                     </div>
                 </div>
                 

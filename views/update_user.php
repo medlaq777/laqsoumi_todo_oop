@@ -9,9 +9,11 @@
 <body class="bg-gray-100 min-h-screen flex items-center justify-center">
     <div class="bg-white shadow-md rounded-lg p-8 max-w-md w-full">
         <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">Update User</h1>
-
-        <!-- Error Message -->
-       
+        <?php if (isset($error)): ?>
+            <div class="mb-4 p-3 text-red-700 bg-red-100 border border-red-300 rounded-md">
+                <?= htmlspecialchars($error); ?>
+            </div>
+        <?php endif; ?>
 
         <!-- Form -->
         <form action="index.php?action=update_user&id=<?= $user['user_id']; ?>" method="POST" class="space-y-4">
