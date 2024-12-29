@@ -70,7 +70,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
+                        <?php foreach ($tasks as $task): ?>
+                        <tr class="border-b">
+                            <td class="py-3 px-4"><?php echo htmlspecialchars($task['task_id']); ?></td>
+                            <td class="py-3 px-4"><?php echo htmlspecialchars($task['title']); ?></td>
+                            <td class="py-3 px-4"><?php echo htmlspecialchars($task['description']); ?></td>
+                            <td class="py-3 px-4"><?php echo htmlspecialchars($task['status']); ?></td>
+                            <td class="py-3 px-4">
+                                <a href="index.php?action=assign_task&id=<?php echo $task['task_id']; ?>" class="text-blue-600 hover:text-blue-800">Assign User</a>
+                            </td>
+                            <td class="py-3 px-4">
+                                <a href="index.php?action=edit_task&id=<?php echo $task['task_id']; ?>" class="text-yellow-600 hover:text-yellow-800">Edit</a>
+                                <a href="index.php?action=delete_task&id=<?php echo $task['task_id']; ?>" class="text-red-600 hover:text-red-800 ml-2" onclick="return confirm('Are you sure you want to delete this task?');">Delete</a>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </section>
