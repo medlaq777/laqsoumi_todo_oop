@@ -152,15 +152,19 @@ class Task {
     }
 
    
-  
+    public function deleteTaskById($task_id) {
+        $query = "DELETE FROM tasks WHERE task_id = :task_id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':task_id', $task_id,PDO::PARAM_INT);
+        return $stmt->execute();
+    }
    
     
-  
-
+   
    
 
-      
-     
+       
+        
     
 }
 ?>
