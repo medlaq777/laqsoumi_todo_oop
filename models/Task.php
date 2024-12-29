@@ -13,7 +13,17 @@ class Task {
         $this->conn = $db;
     }
 
-    
+    public function getAllTaskstag() {
+        $stmt = $this->conn->prepare("
+            SELECT t.*, GROUP_CONCAT(tg.NAME) as tags 
+            FROM Tasks t 
+            LEFT JOIN TagsTasks tt ON t.task_id = tt.tasks_id 
+            LEFT JOIN Tags tg ON tt.tags_id = tg.id_tags 
+            GROUP BY t.task_id
+        ");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
     
    
     
