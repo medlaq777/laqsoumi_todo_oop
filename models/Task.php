@@ -67,7 +67,24 @@ class Task {
         }
     }
 
-   
+    public function getTasksByUserId($user_id) {
+        $query = "SELECT t.task_id, t.title, t.description, t.status 
+                  FROM " . $this->usertask_table . " AS ut
+                  INNER JOIN " . $this->table_name . " AS t 
+                  ON ut.task_id = t.task_id
+                  WHERE ut.user_id = :user_id";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+
+        try {
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error fetching tasks for user ID $user_id: " . $e->getMessage());
+            return [];
+        }
+    }
 
     
    
