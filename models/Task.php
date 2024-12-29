@@ -106,7 +106,36 @@ class Task {
         }
     }
 
-  
+    public function assignTaskToUser($task_id, $user_id) {
+        $userQuery = "SELECT * FROM users WHERE user_id = :user_id";  // Ensure correct column name
+        $stmt = $this->conn->prepare($userQuery);
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->execute();
+    
+        if ($stmt->rowCount() === 0) {
+            return 'User does not exist';
+        }
+    
+        $taskQuery = "SELECT * FROM tasks WHERE task_id = :task_id";  // Ensure correct column name
+        $stmt = $this->conn->prepare($taskQuery);
+        $stmt->bindParam(':task_id', $task_id, PDO::PARAM_INT);
+        $stmt->execute();
+    
+        if ($stmt->rowCount() === 0) {
+            return 'Task does not exist';
+        }
+    
+        $insertQuery = "INSERT INTO usertasks (user_id, task_id) VALUES (:user_id, :task_id)";
+        $stmt = $this->conn->prepare($insertQuery);
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->bindParam(':task_id', $task_id, PDO::PARAM_INT);
+    
+        if ($stmt->execute()) {
+            return 'Task successfully assigned';
+        } else {
+            return 'Error assigning task';
+        }
+    }
     
     
     
