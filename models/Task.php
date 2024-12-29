@@ -87,7 +87,25 @@ class Task {
     }
 
     
-   
+    public function getUsersByTaskId($task_id) {
+        $query = "SELECT u.id, u.name 
+                  FROM " . $this->usertask_table . " AS ut
+                  INNER JOIN users AS u 
+                  ON ut.user_id = u.id
+                  WHERE ut.task_id = :task_id";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':task_id', $task_id, PDO::PARAM_INT);
+
+        try {
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error fetching users for task ID $task_id: " . $e->getMessage());
+            return [];
+        }
+    }
+
   
     
     
