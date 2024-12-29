@@ -6,7 +6,11 @@ class Tag {
         $this->db = $db;
     }
     
-   
+    public function getAllTags() {
+        $stmt = $this->conn->prepare("SELECT * FROM Tags");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
     
    
 }
