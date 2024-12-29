@@ -33,11 +33,34 @@
       
         <div class="grid grid-cols-3 gap-6">
           
+            <div class="bg-white rounded-lg shadow-md p-6 border-t-4 border-<?php echo $column['color']; ?>-500">
+                <h2 class="text-xl font-semibold text-<?php echo $column['color']; ?>-500 mb-4">
+                    <?php echo $column['title']; ?> | <?php echo count($tasks_by_status[$status]); ?>
+                </h2>
+                <div class="space-y-4">
+                   
+                    <div class="border rounded-lg p-4">
+                        <h3 class="font-bold mb-2"><?php echo htmlspecialchars($task['title']); ?></h3>
+                  
+                        <div class="flex flex-wrap gap-2 mb-2">
+                          
+                            <span class="px-2 py-1 text-sm rounded <?php echo $tagColor; ?>">
+                                <?php echo htmlspecialchars($tag); ?>
+                            </span>
+                           
                         </div>
                         <div class="flex justify-between items-center mt-2">
                             <span class="text-sm text-gray-600">
                                 Échéance: 
-                               
+                              
+                            </span>
+                            <a href="index.php?action=task_details&id=<?php echo $task['task_id']; ?>" 
+                               class="bg-gray-100 hover:bg-gray-200 text-gray-800 px-3 py-1 rounded text-sm">
+                                Détails
+                            </a>
+                        </div>
+                    </div>
+                  
                 </div>
             </div>
            

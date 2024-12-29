@@ -10,8 +10,7 @@
     <div class="bg-white shadow-md rounded-lg p-8 max-w-md w-full">
         <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">Update Task</h1>
 
-        
-
+       
         <!-- Form -->
         <form action="index.php?action=update_task&id=<?= $task['task_id']; ?>" method="POST" class="space-y-4">
             <!-- Task Title -->

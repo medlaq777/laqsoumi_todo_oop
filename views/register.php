@@ -11,7 +11,7 @@
         <div class="bg-white p-8 rounded-lg shadow-md w-96">
             <h1 class="text-2xl font-bold mb-6 text-center">Register</h1>
 
-            
+           
 
             <form action="index.php?action=register" method="POST">
                 <div class="mb-4">
