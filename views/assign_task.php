@@ -20,7 +20,9 @@
             <label for="task_id" class="block text-sm font-medium text-gray-700">Task:</label>
             <select name="task_id" id="task_id" class="w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
                 <option value="">Select a task</option>
-             
+                <?php foreach ($tasks as $task): ?>
+                    <option value="<?= htmlspecialchars($task['task_id']); ?>"><?= htmlspecialchars($task['title']); ?></option>
+                <?php endforeach; ?>
             </select>
         </div>
 
