@@ -14,6 +14,7 @@ class AdminController {
     public function dashboard() {
         $users = $this->user->getAllUsers();
         $tasks = $this->task->getAllTasks();
+        
         include 'views/admin_dashboard.php';
     }
 
