@@ -161,7 +161,17 @@ class Task {
    
     
    
-   
+    public function updateTaskById($task_id, $title, $description, $status, $priority) {
+        $query = "UPDATE tasks SET title = :title, description = :description, status = :status, priority = :priority WHERE task_id = :task_id";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':title', $title);
+        $stmt->bindParam(':description', $description);
+        $stmt->bindParam(':status', $status);
+        $stmt->bindParam(':priority', $priority);
+        $stmt->bindParam(':task_id', $task_id);
+        return $stmt->execute();
+    }
 
        
         
