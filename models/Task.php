@@ -54,7 +54,18 @@ class Task {
         
     }
   
-  
+    public function getAllTasks() {
+        $query = "SELECT task_id, title,description ,status FROM " . $this->table_name;
+        $stmt = $this->conn->prepare($query);
+
+        try {
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error fetching all tasks: " . $e->getMessage());
+            return [];
+        }
+    }
 
    
 
