@@ -141,7 +141,15 @@ class Task {
     
   
 
-   
+    public function create() {
+        $query = "INSERT INTO " . $this->table_name . " (title, description, status) 
+                  VALUES (:title, :description, :status)";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':title', $this->title);
+        $stmt->bindParam(':description', $this->description);
+        $stmt->bindParam(':status', $this->status);
+        return $stmt->execute();
+    }
 
    
   
